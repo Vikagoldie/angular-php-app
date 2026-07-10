@@ -1,6 +1,6 @@
 <?php
 
-namespace ppa\Model;
+namespace webshop\Model;
 
 use PDO;
 
