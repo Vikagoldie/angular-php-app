@@ -8,8 +8,8 @@ use PDOException;
 class Database {
     
    
-    private $dbName = "pbbfa24akr_av"; //Datenbankname
-    private $linkName = "mysql.pb.bib.de"; //Datenbank-Server
+    private $dbName = "pbbfa24akr_giftboxes"; //Datenbankname
+    private $linkName = "mysql.pb.bib.de"; //Datenbank-Server«
     private $user = "pbbfa24akr"; //Benutzername
     private $pw = "x5uMyFQSv87E"; //Passwort
     

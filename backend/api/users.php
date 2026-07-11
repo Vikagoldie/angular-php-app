@@ -7,21 +7,22 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 use ppa\Config\Database;
 use ppa\Model\UserModel;
+use ppa\Controller\UserController;
 
 require_once '../config/Database.php';
-require_once '../models/UserModel.php';
-
+require_once '../controllers/UserController.php';
 
 try {
 
     $database = new Database();
     $pdo = $database->linkDB();
 
-    $userModel = new UserModel($pdo);
+    $controller = new UserController($pdo);
 
-    $users = $userModel->getAll();
+    $users = $controller->getUsers();
 
     echo json_encode($users);
+    exit;
 
 } catch (Exception $e) {
 

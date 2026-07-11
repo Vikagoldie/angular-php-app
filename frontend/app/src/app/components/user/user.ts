@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../services/user.service';
+import { UserModel } from '../../models/userModel';
 
 @Component({
   selector: 'app-user',
@@ -9,8 +10,7 @@ import { UserService } from '../services/user.service';
   styleUrl: './user.scss',
 })
 export class User {
-  users: any[] = [];
-
+  users: UserModel[] = [];
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
