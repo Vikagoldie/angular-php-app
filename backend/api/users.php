@@ -12,6 +12,7 @@ use ppa\Controller\UserController;
 require_once '../config/Database.php';
 require_once '../controllers/UserController.php';
 
+
 try {
 
     $database = new Database();
