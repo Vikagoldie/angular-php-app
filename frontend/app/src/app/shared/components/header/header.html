@@ -1,1 +1,46 @@
-<p>header works!</p>
+<header class="header">
+  <div class="container">
+    <!-- Logo -->
+    <div class="logo">
+      <a routerLink="/"> 🎁 GiftShop </a>
+    </div>
+
+    <!-- Mobile Button -->
+    <button class="menu-button" (click)="toggleMenu()">☰</button>
+
+    <!-- Navigation -->
+    <nav class="navigation" [class.open]="isMenuOpen">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Home
+      </a>
+
+      <a routerLink="/products" routerLinkActive="active"> Geschenkboxen </a>
+
+      <a routerLink="/contact" routerLinkActive="active"> Kontakt </a>
+    </nav>
+
+    <!-- Suche -->
+    <div class="search-box">
+      <input type="text" placeholder="Geschenk suchen..." />
+
+      <button>🔍</button>
+    </div>
+
+    <!-- Benutzer -->
+    <div class="user-area">
+      <a routerLink="/login"> 👤 Login </a>
+
+      <a routerLink="/cart">
+        🛒 Warenkorb
+
+        <span class="cart-count">
+          {{ cartCount }}
+        </span>
+      </a>
+    </div>
+  </div>
+</header>

@@ -1,1 +1,50 @@
-<p>footer works!</p>
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Über uns -->
+    <div class="footer-column">
+      <h3>🎁 GiftShop</h3>
+
+      <p>
+        Persönliche Geschenkboxen für jeden Anlass. Liebevoll zusammengestellt
+        und schnell geliefert.
+      </p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="footer-column">
+      <h4>Shop</h4>
+
+      <a routerLink="/"> Startseite </a>
+
+      <a routerLink="/products"> Geschenkboxen </a>
+
+      <a routerLink="/cart"> Warenkorb </a>
+    </div>
+
+    <!-- Kundenservice -->
+    <div class="footer-column">
+      <h4>Service</h4>
+
+      <a routerLink="/contact"> Kontakt </a>
+
+      <a routerLink="/faq"> FAQ </a>
+
+      <a routerLink="/shipping"> Versand </a>
+    </div>
+
+    <!-- Rechtliches -->
+    <div class="footer-column">
+      <h4>Rechtliches</h4>
+
+      <a routerLink="/imprint"> Impressum </a>
+
+      <a routerLink="/privacy"> Datenschutz </a>
+
+      <a routerLink="/terms"> AGB </a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© {{ currentYear }} GiftShop. Alle Rechte vorbehalten.</p>
+  </div>
+</footer>

@@ -15,6 +15,8 @@ require_once '../Model/UserModel.php';
 require_once '../Controller/UserController.php';
 
 use webshop\Controller\UserController;
+use webshop\Model\UserModel;
+use webshop\Model\Database;
 
 try {
     $controller = new UserController();
