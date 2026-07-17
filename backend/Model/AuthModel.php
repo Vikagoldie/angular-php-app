@@ -12,10 +12,9 @@ class AuthModel extends Database
                 WHERE u.email = :email";
 
         $pdo = $this->linkDB();
-        $stmt = $pdo->prepare($sql); 
-
+        $stmt = $pdo->prepare($sql);
         $stmt->execute(['email' => $email]);
 
-        return $stmt->fetch();
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 }

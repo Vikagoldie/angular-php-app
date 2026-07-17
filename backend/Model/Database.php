@@ -1,42 +1,34 @@
 <?php
 
+namespace webshop\Model;
 
-namespace ppa\Config;
-use PDO;
-use PDOException;
+class Database
+{
+    private $dbName = "pbbfa24akr_giftboxes";
+    private $linkName = "mysql.pb.bib.de";
+    private $user = "pbbfa24akr";
+    private $pw = "x5uMyFQSv87E";
 
-class Database {
-    
-   
-    private $dbName = "pbbfa24akr_giftboxes"; //Datenbankname
-    private $linkName = "mysql.pb.bib.de"; //Datenbank-Server
-    private $user = "pbbfa24akr"; //Benutzername
-    private $pw = "x5uMyFQSv87E"; //Passwort
-    
-    /**
-     * Stellt eine Verbindung zur Datenbank herss
-     * 
-     * @return \PDO Gibt eine Datenbankverbindung zurueck
-     */
-    public function linkDB() {
+    public function linkDB()
+    {
         try {
-            $pdo = new \PDO("mysql:dbname=$this->dbName;host=$this->linkName"
-                , $this->user
-                , $this->pw
-                , array(\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION));
+            $pdo = new \PDO(
+                "mysql:dbname=$this->dbName;host=$this->linkName;charset=utf8mb4",
+                $this->user,
+                $this->pw,
+                [
+                    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+                    \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
+                ]
+            );
+
             return $pdo;
         } catch (\PDOException $e) {
             echo json_encode([
                 "success" => false,
                 "message" => $e->getMessage()
             ]);
-        
             exit;
         }
     }
-
 }
-
-   
-
-

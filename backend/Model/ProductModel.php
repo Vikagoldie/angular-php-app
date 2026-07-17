@@ -2,6 +2,8 @@
 
 namespace webshop\Model;
 
+use webshop\Model\Database;
+
 class ProductModel extends Database
 {
     public function getAll(?string $search = null, string $sort = 'name', string $direction = 'ASC')
@@ -17,20 +19,26 @@ class ProductModel extends Database
             $direction = 'ASC';
         }
 
-        $sql = "SELECT product_id, name, description, price, stock
+        $pdo = $this->linkDB();
+
+        if ($search !== null && trim($search) !== '') {
+            $sql = "SELECT product_id, name, description, price, stock
                 FROM products
-                WHERE (:search IS NULL OR name LIKE :searchLike)
+                WHERE name LIKE :search
                 ORDER BY $sort $direction";
 
-        $pdo = $this->linkDB();
-        $stmt = $pdo->prepare($sql);
-        $searchLike = $search ? "%$search%" : null;
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute(['search' => '%' . $search . '%']);
+        } else {
+            $sql = "SELECT product_id, name, description, price, stock
+                FROM products
+                ORDER BY $sort $direction";
 
-        $stmt->bindValue(':search', $search, \PDO::PARAM_STR);
-        $stmt->bindValue(':searchLike', $searchLike, \PDO::PARAM_STR);
-        $stmt->execute();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+        }
 
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function getById(int $id)

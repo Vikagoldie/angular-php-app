@@ -22,13 +22,9 @@ class OrderModel extends Database
                 ORDER BY o.order_date DESC";
 
         $pdo = $this->linkDB();
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
 
-        try {
-            $stmt = $pdo->query($sql);
-        } catch (\PDOException $e) {
-            die("Bestellungen konnten nicht geladen werden.");
-        }
-
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }
