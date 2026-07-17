@@ -17,13 +17,13 @@ class UserModel
     {
         $sql = "
             SELECT
-                id,
-                username,
+                user_id,
                 firstname,
                 lastname,
                 email,
-                created
-            FROM user
+                password_hash,
+                role_id
+            FROM users
             ORDER BY lastname, firstname
         ";
 
