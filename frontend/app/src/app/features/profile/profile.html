@@ -1,1 +1,71 @@
-<p>profile works!</p>
+<section class="page-narrow">
+  <h1>Mein Profil</h1>
+
+  @if (isLoading) {
+    <p>Profil wird geladen…</p>
+  } @else {
+    @if (successMessage) {
+      <p class="alert alert-success">{{ successMessage }}</p>
+    }
+
+    @if (serverErrors.length > 0) {
+      <div class="alert alert-error">
+        <ul>
+          @for (error of serverErrors; track error) {
+            <li>{{ error }}</li>
+          }
+        </ul>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="firstname">Vorname</label>
+        <input
+          id="firstname"
+          type="text"
+          formControlName="firstname"
+          [class.invalid]="firstname.invalid && firstname.touched"
+        />
+        @if (firstname.invalid && firstname.touched) {
+          <span class="field-error">Vorname ist erforderlich.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="lastname">Nachname</label>
+        <input
+          id="lastname"
+          type="text"
+          formControlName="lastname"
+          [class.invalid]="lastname.invalid && lastname.touched"
+        />
+        @if (lastname.invalid && lastname.touched) {
+          <span class="field-error">Nachname ist erforderlich.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="email">E-Mail</label>
+        <input id="email" type="email" formControlName="email" [class.invalid]="email.invalid && email.touched" />
+        @if (email.invalid && email.touched) {
+          <span class="field-error">Bitte eine gültige E-Mail-Adresse eingeben.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="password">Neues Passwort (optional)</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Nur ausfüllen, um das Passwort zu ändern"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Speichern…' : 'Speichern' }}
+      </button>
+    </form>
+  }
+</section>

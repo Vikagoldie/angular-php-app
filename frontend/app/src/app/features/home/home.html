@@ -1,1 +1,23 @@
-<p>home works!</p>
+<section class="hero">
+  <div class="hero__content">
+    <h1>Geschenkboxen, die von Herzen kommen</h1>
+    <p>Liebevoll zusammengestellte Boxen für jeden Anlass – entdecke unsere Auswahl.</p>
+    <a routerLink="/products" class="btn btn-accent">Jetzt entdecken</a>
+  </div>
+</section>
+
+<section class="page">
+  <h2>Beliebte Geschenkboxen</h2>
+
+  @if (isLoading) {
+    <p>Produkte werden geladen…</p>
+  } @else if (featuredProducts.length === 0) {
+    <p>Aktuell sind keine Produkte verfügbar.</p>
+  } @else {
+    <div class="product-grid">
+      @for (product of featuredProducts; track product.product_id) {
+        <app-product-card [product]="product" (addToCart)="addToCart($event)" />
+      }
+    </div>
+  }
+</section>

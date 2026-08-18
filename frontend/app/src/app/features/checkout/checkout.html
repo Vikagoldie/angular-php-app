@@ -1,1 +1,28 @@
-<p>checkout works!</p>
+<section class="page-narrow">
+  <h1>Bestellung abschließen</h1>
+
+  @if (cartService.items().length === 0) {
+    <p>Dein Warenkorb ist leer.</p>
+    <a routerLink="/products" class="btn btn-secondary">Geschenkboxen entdecken</a>
+  } @else {
+    <ul class="checkout-list">
+      @for (item of cartService.items(); track item.product.product_id) {
+        <li>
+          <span>{{ item.quantity }}x {{ item.product.name }}</span>
+          <span>{{ item.product.price * item.quantity | number: '1.2-2' }} €</span>
+        </li>
+      }
+    </ul>
+
+    <p class="checkout-total">Gesamtsumme: <strong>{{ cartService.totalPrice() | number: '1.2-2' }} €</strong></p>
+
+    @if (errorMessage) {
+      <p class="alert alert-error">{{ errorMessage }}</p>
+    }
+
+    <button type="button" class="btn btn-primary" [disabled]="isSubmitting" (click)="placeOrder()">
+      {{ isSubmitting ? 'Bestellung wird aufgegeben…' : 'Jetzt kostenpflichtig bestellen' }}
+    </button>
+    <p class="checkout-hint">Hinweis: Es wird kein echtes Zahlungssystem verwendet (Schulprojekt).</p>
+  }
+</section>

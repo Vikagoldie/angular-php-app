@@ -24,12 +24,22 @@ class UserController
         $sort = $query['sort'] ?? 'lastname';
         $direction = $query['direction'] ?? 'ASC';
 
-        return $this->userModel->getAll($sort, $direction);
+        $users = $this->userModel->getAll($sort, $direction);
+
+        return array_map([$this, 'hidePasswordHash'], $users);
     }
 
     public function show(int $id)
     {
-        return $this->userModel->getById($id);
+        $user = $this->userModel->getById($id);
+
+        return $user ? $this->hidePasswordHash($user) : $user;
+    }
+
+    private function hidePasswordHash(array $user): array
+    {
+        unset($user['password_hash']);
+        return $user;
     }
 
     public function store(array $post)
@@ -49,8 +59,16 @@ class UserController
         return ['success' => true];
     }
 
-    public function update(int $id, array $post)
+    public function update(int $id, array $post, bool $isAdmin = false)
     {
+        // Nur Admins dürfen die Rolle eines Benutzers ändern. Normale Benutzer
+        // behalten beim Bearbeiten ihres eigenen Profils ihre bisherige Rolle,
+        // egal was im Request mitgeschickt wurde.
+        if (!$isAdmin) {
+            $existing = $this->userModel->getById($id);
+            $post['role_id'] = $existing['role_id'] ?? $post['role_id'] ?? null;
+        }
+
         $errors = $this->validateUser($post, false);
 
         $existingUser = $this->userModel->getByEmail($post['email'] ?? '');

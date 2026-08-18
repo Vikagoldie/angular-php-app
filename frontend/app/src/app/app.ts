@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,14 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
-export class App {
-  protected title = 'app';
+export class App implements OnInit {
+  protected title = 'GiftShop';
+
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    // Login-Status einmal beim Start laden, damit Header & Co. sofort wissen,
+    // ob bereits eine gültige Session besteht (z. B. nach einem Seiten-Reload).
+    this.authService.loadCurrentUser().subscribe();
+  }
 }

@@ -1,0 +1,88 @@
+<div class="admin-form">
+  <h2>{{ isEditMode ? 'Geschenkbox bearbeiten' : 'Neue Geschenkbox anlegen' }}</h2>
+
+  @if (isLoading) {
+    <p>Daten werden geladen…</p>
+  } @else {
+    @if (serverErrors.length > 0) {
+      <div class="alert alert-error">
+        <ul>
+          @for (error of serverErrors; track error) {
+            <li>{{ error }}</li>
+          }
+        </ul>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" type="text" formControlName="name" [class.invalid]="name.invalid && name.touched" />
+        @if (name.invalid && name.touched) {
+          <span class="field-error">Produktname ist erforderlich.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Beschreibung</label>
+        <textarea id="description" rows="4" formControlName="description"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="price">Preis (€)</label>
+        <input
+          id="price"
+          type="number"
+          step="0.01"
+          min="0"
+          formControlName="price"
+          [class.invalid]="price.invalid && price.touched"
+        />
+        @if (price.invalid && price.touched) {
+          <span class="field-error">Preis muss eine gültige positive Zahl sein.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Bestand</label>
+        <input
+          id="stock"
+          type="number"
+          step="1"
+          min="0"
+          formControlName="stock"
+          [class.invalid]="stock.invalid && stock.touched"
+        />
+        @if (stock.invalid && stock.touched) {
+          <span class="field-error">Bestand muss eine gültige ganze Zahl sein.</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="image">Produktbild (JPG, PNG oder WEBP, max. 2 MB)</label>
+        <input id="image" type="file" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" />
+
+        @if (imagePreviewUrl) {
+          <img [src]="imagePreviewUrl" alt="Aktuelles Produktbild" class="admin-form__preview" />
+        }
+
+        @if (uploadErrors.length > 0) {
+          <div class="alert alert-error">
+            <ul>
+              @for (error of uploadErrors; track error) {
+                <li>{{ error }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+
+      <div class="admin-form__actions">
+        <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+          {{ isSubmitting ? 'Speichern…' : 'Speichern' }}
+        </button>
+        <a routerLink="/admin/products" class="btn btn-secondary">Abbrechen</a>
+      </div>
+    </form>
+  }
+</div>

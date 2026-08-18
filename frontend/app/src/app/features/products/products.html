@@ -1,1 +1,35 @@
-<p>products works!</p>
+<section class="page">
+  <h1>Unsere Geschenkboxen</h1>
+
+  <div class="products-toolbar">
+    <app-search-bar [value]="searchTerm" (search)="onSearch($event)" />
+
+    <select
+      class="products-toolbar__sort"
+      (change)="onSortChange($any($event.target).value)"
+      [value]="sort + '-' + direction"
+      aria-label="Sortierung"
+    >
+      <option value="name-ASC">Name (A–Z)</option>
+      <option value="name-DESC">Name (Z–A)</option>
+      <option value="price-ASC">Preis aufsteigend</option>
+      <option value="price-DESC">Preis absteigend</option>
+    </select>
+  </div>
+
+  @if (errorMessage) {
+    <p class="alert alert-error">{{ errorMessage }}</p>
+  }
+
+  @if (isLoading) {
+    <p>Produkte werden geladen…</p>
+  } @else if (products.length === 0) {
+    <p>Keine Geschenkboxen gefunden.</p>
+  } @else {
+    <div class="product-grid">
+      @for (product of products; track product.product_id) {
+        <app-product-card [product]="product" (addToCart)="addToCart($event)" />
+      }
+    </div>
+  }
+</section>

@@ -1,9 +1,9 @@
 .header {
   width: 100%;
 
-  background: white;
+  background: var(--color-surface);
 
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--color-border);
 
   position: sticky;
 
@@ -32,7 +32,7 @@
 
   text-decoration: none;
 
-  color: #333;
+  color: var(--color-primary);
 }
 
 .navigation {
@@ -46,45 +46,22 @@
 .navigation a {
   text-decoration: none;
 
-  color: #555;
+  color: var(--color-text-muted);
 }
 
 .navigation a.active {
-  color: #e91e63;
+  color: var(--color-primary);
 
   font-weight: bold;
 }
 
 .search-box {
-  display: flex;
-
-  border: 1px solid #ccc;
-
-  border-radius: 20px;
-
-  overflow: hidden;
-}
-
-.search-box input {
-  border: none;
-
-  outline: none;
-
-  padding: 8px 15px;
-
   width: 220px;
-}
-
-.search-box button {
-  border: none;
-
-  background: white;
-
-  cursor: pointer;
 }
 
 .user-area {
   display: flex;
+  align-items: center;
 
   gap: 15px;
 }
@@ -92,13 +69,26 @@
 .user-area a {
   text-decoration: none;
 
-  color: #333;
+  color: var(--color-text);
+}
+
+.link-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text);
+  font: inherit;
+  padding: 0;
+}
+
+.link-button:hover {
+  color: var(--color-primary);
 }
 
 .cart-count {
-  background: red;
+  background: var(--color-accent);
 
-  color: white;
+  color: var(--color-primary-dark);
 
   border-radius: 50%;
 
@@ -129,7 +119,7 @@
 
     width: 100%;
 
-    background: white;
+    background: var(--color-surface);
 
     flex-direction: column;
 

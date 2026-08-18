@@ -3,6 +3,5 @@ export interface UserModel {
   firstname: string;
   lastname: string;
   email: string;
-  password_hash: string;
   role_id: number;
 }

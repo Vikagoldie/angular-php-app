@@ -1,0 +1,28 @@
+.hero {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: white;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.hero__content h1 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 0.4em;
+}
+
+.hero__content p {
+  max-width: 500px;
+  margin: 0 auto 1.4em;
+  color: var(--color-secondary);
+}
+
+@media (max-width: 500px) {
+  .hero {
+    padding: 40px 16px;
+  }
+
+  .hero__content h1 {
+    font-size: 1.5rem;
+  }
+}

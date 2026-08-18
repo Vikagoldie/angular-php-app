@@ -1,1 +1,85 @@
-<p>register works!</p>
+<section class="page-narrow">
+  <h1>Registrieren</h1>
+
+  @if (successMessage) {
+    <p class="alert alert-success">{{ successMessage }}</p>
+  }
+
+  @if (serverErrors.length > 0) {
+    <div class="alert alert-error">
+      <ul>
+        @for (error of serverErrors; track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="firstname">Vorname</label>
+      <input
+        id="firstname"
+        type="text"
+        formControlName="firstname"
+        [class.invalid]="firstname.invalid && firstname.touched"
+      />
+      @if (firstname.invalid && firstname.touched) {
+        <span class="field-error">Vorname ist erforderlich.</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="lastname">Nachname</label>
+      <input
+        id="lastname"
+        type="text"
+        formControlName="lastname"
+        [class.invalid]="lastname.invalid && lastname.touched"
+      />
+      @if (lastname.invalid && lastname.touched) {
+        <span class="field-error">Nachname ist erforderlich.</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-Mail</label>
+      <input id="email" type="email" formControlName="email" [class.invalid]="email.invalid && email.touched" />
+      @if (email.invalid && email.touched) {
+        <span class="field-error">Bitte eine gültige E-Mail-Adresse eingeben.</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password">Passwort</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [class.invalid]="password.invalid && password.touched"
+      />
+      @if (password.invalid && password.touched) {
+        <span class="field-error">Das Passwort muss mindestens 8 Zeichen lang sein.</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="confirmPassword">Passwort bestätigen</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="confirmPassword"
+        [class.invalid]="confirmPassword.touched && form.errors?.['passwordMismatch']"
+      />
+      @if (confirmPassword.touched && form.errors?.['passwordMismatch']) {
+        <span class="field-error">Die Passwörter stimmen nicht überein.</span>
+      }
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Registrieren…' : 'Registrieren' }}
+    </button>
+  </form>
+
+  <p class="login-hint">Bereits registriert? <a routerLink="/login">Jetzt einloggen</a></p>
+</section>

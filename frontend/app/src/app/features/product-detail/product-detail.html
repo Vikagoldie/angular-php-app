@@ -1,1 +1,40 @@
-<p>product-detail works!</p>
+@if (isLoading) {
+  <p class="page">Produkt wird geladen…</p>
+} @else if (notFound) {
+  <div class="page">
+    <p class="alert alert-error">Dieses Produkt wurde nicht gefunden.</p>
+    <a routerLink="/products" class="btn btn-secondary">Zurück zur Übersicht</a>
+  </div>
+} @else if (product) {
+  <section class="page product-detail">
+    <div class="product-detail__image">
+      @if (imageUrl) {
+        <img [src]="imageUrl" [alt]="product.name" />
+      } @else {
+        <div class="product-detail__placeholder">🎁</div>
+      }
+    </div>
+
+    <div class="product-detail__info">
+      <h1>{{ product.name }}</h1>
+      <p class="product-detail__price">{{ product.price | number: '1.2-2' }} €</p>
+      <p class="product-detail__description">{{ product.description }}</p>
+
+      @if (product.stock <= 0) {
+        <p class="alert alert-error">Aktuell leider ausverkauft.</p>
+      } @else {
+        <p class="product-detail__stock">Auf Lager: {{ product.stock }} Stück</p>
+
+        <div class="product-detail__actions">
+          <label for="quantity">Menge</label>
+          <input id="quantity" type="number" min="1" [max]="product.stock" [(ngModel)]="quantity" />
+          <button type="button" class="btn btn-primary" (click)="addToCart()">In den Warenkorb</button>
+        </div>
+
+        @if (addedMessage) {
+          <p class="alert alert-success">{{ addedMessage }}</p>
+        }
+      }
+    </div>
+  </section>
+}

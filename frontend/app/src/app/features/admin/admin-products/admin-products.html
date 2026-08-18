@@ -1,0 +1,37 @@
+<div class="admin-products">
+  <div class="admin-products__toolbar">
+    <a routerLink="new" class="btn btn-primary">+ Neue Geschenkbox</a>
+  </div>
+
+  @if (errorMessage) {
+    <p class="alert alert-error">{{ errorMessage }}</p>
+  }
+
+  @if (isLoading) {
+    <p>Produkte werden geladen…</p>
+  } @else {
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Preis</th>
+          <th>Bestand</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (product of products; track product.product_id) {
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price | number: '1.2-2' }} €</td>
+            <td>{{ product.stock }}</td>
+            <td class="admin-table__actions">
+              <a [routerLink]="[product.product_id, 'edit']" class="btn btn-secondary">Bearbeiten</a>
+              <button type="button" class="btn btn-danger" (click)="delete(product)">Löschen</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

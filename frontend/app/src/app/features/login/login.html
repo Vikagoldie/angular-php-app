@@ -1,1 +1,42 @@
-<p>login works!</p>
+<section class="page-narrow">
+  <h1>Login</h1>
+
+  @if (serverErrors.length > 0) {
+    <div class="alert alert-error">
+      <ul>
+        @for (error of serverErrors; track error) {
+          <li>{{ error }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+    <div class="form-group">
+      <label for="email">E-Mail</label>
+      <input id="email" type="email" formControlName="email" [class.invalid]="email.invalid && email.touched" />
+      @if (email.invalid && email.touched) {
+        <span class="field-error">Bitte eine gültige E-Mail-Adresse eingeben.</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="password">Passwort</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        [class.invalid]="password.invalid && password.touched"
+      />
+      @if (password.invalid && password.touched) {
+        <span class="field-error">Bitte ein Passwort eingeben.</span>
+      }
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Anmelden…' : 'Anmelden' }}
+    </button>
+  </form>
+
+  <p class="login-hint">Noch kein Konto? <a routerLink="/register">Jetzt registrieren</a></p>
+</section>

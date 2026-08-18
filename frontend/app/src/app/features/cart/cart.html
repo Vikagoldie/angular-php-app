@@ -1,1 +1,48 @@
-<p>cart works!</p>
+<section class="page">
+  <h1>Warenkorb</h1>
+
+  @if (cartService.items().length === 0) {
+    <p>Dein Warenkorb ist leer.</p>
+    <a routerLink="/products" class="btn btn-secondary">Geschenkboxen entdecken</a>
+  } @else {
+    <table class="cart-table">
+      <thead>
+        <tr>
+          <th>Produkt</th>
+          <th>Preis</th>
+          <th>Menge</th>
+          <th>Summe</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of cartService.items(); track item.product.product_id) {
+          <tr>
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.product.price | number: '1.2-2' }} €</td>
+            <td>
+              <input
+                type="number"
+                min="1"
+                [max]="item.product.stock"
+                [value]="item.quantity"
+                (change)="updateQuantity(item.product.product_id, $any($event.target).value)"
+              />
+            </td>
+            <td>{{ item.product.price * item.quantity | number: '1.2-2' }} €</td>
+            <td>
+              <button type="button" class="btn btn-secondary" (click)="remove(item.product.product_id)">
+                Entfernen
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <div class="cart-summary">
+      <p>Gesamtsumme: <strong>{{ cartService.totalPrice() | number: '1.2-2' }} €</strong></p>
+      <a routerLink="/checkout" class="btn btn-primary">Zur Kasse</a>
+    </div>
+  }
+</section>

@@ -1,1 +1,22 @@
-<p>product-card works!</p>
+<article class="product-card card">
+  <a [routerLink]="['/products', product.product_id]" class="product-card__image-link">
+    @if (imageUrl) {
+      <img [src]="imageUrl" [alt]="product.name" class="product-card__image" />
+    } @else {
+      <div class="product-card__placeholder">🎁</div>
+    }
+  </a>
+
+  <div class="product-card__body">
+    <a [routerLink]="['/products', product.product_id]" class="product-card__name">{{ product.name }}</a>
+    <p class="product-card__price">{{ product.price | number: '1.2-2' }} €</p>
+
+    @if (product.stock <= 0) {
+      <p class="product-card__stock product-card__stock--out">Ausverkauft</p>
+    } @else {
+      <button type="button" class="btn btn-primary product-card__add" (click)="addToCart.emit(product)">
+        In den Warenkorb
+      </button>
+    }
+  </div>
+</article>

@@ -2,11 +2,11 @@
   <div class="container">
     <!-- Logo -->
     <div class="logo">
-      <a routerLink="/"> 🎁 GiftShop </a>
+      <a routerLink="/">GiftShop </a>
     </div>
 
     <!-- Mobile Button -->
-    <button class="menu-button" (click)="toggleMenu()">☰</button>
+    <button class="menu-button" (click)="toggleMenu()" aria-label="Menü öffnen">☰</button>
 
     <!-- Navigation -->
     <nav class="navigation" [class.open]="isMenuOpen">
@@ -14,31 +14,41 @@
         routerLink="/"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
+        (click)="isMenuOpen = false"
       >
         Home
       </a>
 
-      <a routerLink="/products" routerLinkActive="active"> Geschenkboxen </a>
+      <a routerLink="/products" routerLinkActive="active" (click)="isMenuOpen = false"> Geschenkboxen </a>
 
-      <a routerLink="/contact" routerLinkActive="active"> Kontakt </a>
+      @if (authService.isLoggedIn()) {
+        <a routerLink="/orders" routerLinkActive="active" (click)="isMenuOpen = false"> Meine Bestellungen </a>
+      }
+
+      @if (authService.isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active" (click)="isMenuOpen = false"> Admin </a>
+      }
     </nav>
 
     <!-- Suche -->
     <div class="search-box">
-      <input type="text" placeholder="Geschenk suchen..." />
-
-      <button>🔍</button>
+      <app-search-bar (search)="onSearch($event)" />
     </div>
 
     <!-- Benutzer -->
     <div class="user-area">
-      <a routerLink="/login"> 👤 Login </a>
+      @if (authService.isLoggedIn()) {
+        <a routerLink="/profile">{{ authService.currentUser()?.firstname }} </a>
+        <button type="button" class="link-button" (click)="logout()">Logout</button>
+      } @else {
+        <a routerLink="/login">Login</a>
+      }
 
       <a routerLink="/cart">
-        🛒 Warenkorb
+        Warenkorb
 
         <span class="cart-count">
-          {{ cartCount }}
+          {{ cartService.totalCount() }}
         </span>
       </a>
     </div>

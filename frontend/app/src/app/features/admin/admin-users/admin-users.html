@@ -1,0 +1,30 @@
+<div class="admin-users">
+  @if (errorMessage) {
+    <p class="alert alert-error">{{ errorMessage }}</p>
+  }
+
+  @if (isLoading) {
+    <p>Benutzer werden geladen…</p>
+  } @else {
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>E-Mail</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users; track user.user_id) {
+          <tr>
+            <td>{{ user.firstname }} {{ user.lastname }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <button type="button" class="btn btn-danger" (click)="delete(user)">Löschen</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>

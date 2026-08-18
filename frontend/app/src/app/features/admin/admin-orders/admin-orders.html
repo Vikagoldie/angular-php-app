@@ -1,0 +1,30 @@
+<div class="admin-orders">
+  @if (errorMessage) {
+    <p class="alert alert-error">{{ errorMessage }}</p>
+  }
+
+  @if (isLoading) {
+    <p>Bestellungen werden geladen…</p>
+  } @else if (groupedOrders.length === 0) {
+    <p>Es liegen noch keine Bestellungen vor.</p>
+  } @else {
+    @for (order of groupedOrders; track order.order_id) {
+      <div class="card order-card">
+        <div class="order-card__header">
+          <span>Bestellung Nr. {{ order.order_id }}</span>
+          <span>{{ order.customerName }}</span>
+          <span>{{ order.order_date | date: 'dd.MM.yyyy HH:mm' }}</span>
+          <span class="order-card__status">{{ order.status }}</span>
+        </div>
+
+        <ul>
+          @for (line of order.lines; track line.product_name) {
+            <li>{{ line.quantity }}x {{ line.product_name }} – {{ line.unit_price | number: '1.2-2' }} €</li>
+          }
+        </ul>
+
+        <p class="order-card__total">Gesamt: {{ order.total_amount | number: '1.2-2' }} €</p>
+      </div>
+    }
+  }
+</div>

@@ -24,9 +24,14 @@ class Database
 
             return $pdo;
         } catch (\PDOException $e) {
+            // Die genaue Fehlermeldung nur im Server-Log ausgeben, nicht an den
+            // Client senden - sie könnte interne Details der Datenbank verraten.
+            error_log('Datenbankverbindung fehlgeschlagen: ' . $e->getMessage());
+
+            http_response_code(500);
             echo json_encode([
                 "success" => false,
-                "message" => $e->getMessage()
+                "message" => "Die Datenbank ist aktuell nicht erreichbar."
             ]);
             exit;
         }

@@ -1,0 +1,10 @@
+# Hochgeladene Produktbilder nicht ins Repo aufnehmen
+backend/uploads/products/*
+!backend/uploads/products/.gitkeep
+
+# Lokale, nicht versionierte Backend-Konfiguration (falls verwendet)
+backend/Model/config.php
+
+# System
+.DS_Store
+Thumbs.db

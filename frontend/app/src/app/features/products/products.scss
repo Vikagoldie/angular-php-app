@@ -1,0 +1,20 @@
+.products-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin: 16px 0 24px;
+}
+
+.products-toolbar app-search-bar {
+  flex: 1;
+  min-width: 220px;
+}
+
+.products-toolbar__sort {
+  padding: 0.6em 0.8em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  font: inherit;
+}
