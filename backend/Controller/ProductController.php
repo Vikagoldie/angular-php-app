@@ -97,7 +97,7 @@ class ProductController
 
         $extension = self::ALLOWED_IMAGE_TYPES[$this->detectMimeType($file['tmp_name'])];
         $filename = uniqid('product_', true) . '.' . $extension;
-        $targetPath = __DIR__ . '/../uploads/products/' . $filename;
+        $targetPath = __DIR__ . '/../api/uploads/products/' . $filename;
 
         if (!move_uploaded_file($file['tmp_name'], $targetPath)) {
             return ['success' => false, 'message' => 'Die Datei konnte nicht gespeichert werden.'];
